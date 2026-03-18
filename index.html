@@ -29,12 +29,12 @@ nav{position:sticky;top:0;z-index:200;height:58px;background:#d6ebe0;border-bott
 .hero{max-width:860px;margin:0 auto;padding:5.5rem 2rem 4.5rem;text-align:center;}
 .hero-eyebrow {
   font-family: 'DM Mono', monospace;
-  font-size: 0.8rem;          /* أكبر */
-  letter-spacing: 0.1em;      /* أقل */
-  color: #222;                /* أو #fff لو الخلفية غامقة */
-  font-weight: 500;           /* أو 600 */
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: #666;   /* رمادي متوازن */
+  font-weight: 500;
   text-transform: uppercase;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
 }.hero-h1{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,6vw,4.6rem);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:.8rem;}
 .hero-h1 .g1{color:var(--green)}.hero-h1 .g2{color:var(--green3)}
 .hero-rule{width:48px;height:2px;background:var(--rule2);margin:1.5rem auto}
@@ -47,7 +47,7 @@ nav{position:sticky;top:0;z-index:200;height:58px;background:#d6ebe0;border-bott
 .hbtn-g2:hover{background:var(--green3);color:#fff;transform:translateY(-1px)}
 .h-rule{border:none;border-top:1px solid var(--rule);max-width:1080px;margin:0 auto}
 .section{max-width:1080px;margin:0 auto;padding:4.5rem 2rem}
-.s-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--ink4);text-transform:uppercase;display:flex;align-items:center;gap:1rem;margin-bottom:2.8rem;}
+.s-label{font-family:'DM Mono',monospace;font-size:.9rem;letter-spacing:.2em;color:var(--ink4);text-transform:uppercase;display:flex;align-items:center;gap:1rem;margin-bottom:2.8rem;}
 .s-label::after{content:'';flex:1;height:1px;background:var(--rule)}
 .rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--shadow2);}
 .rule-card{background:var(--paper);padding:2.4rem}
@@ -161,13 +161,11 @@ footer{border-top:1px solid var(--rule);padding:2.4rem 2rem;text-align:center;ba
     <p class="hero-eyebrow rev" style="animation-delay:.05s">IT426 · AI SYSTEMS · CHAPTER 5</p>
     <h1 class="hero-h1 rev" style="animation-delay:.12s">
       Practice &amp; Master<br>
-      <span class="g1">Greedy</span>
-      <span style="color:var(--ink4);font-size:.55em;font-style:italic"> &amp; </span>
-      <span class="g2">A* Search</span>
+      <span class="g1">Informed Search</span>
     </h1>
     <div class="hero-rule rev" style="animation-delay:.18s"></div>
     <p class="hero-p rev" style="animation-delay:.22s">
-      Choose an algorithm. Each question walks you through frontier selection, f(n) calculation, and path reasoning — exactly how it appears in exams.
+      Choose an algorithm. Each question walks you through frontier selection, f(n) calculation, and path reasoning
     </p>
   </div>
 
@@ -178,7 +176,7 @@ footer{border-top:1px solid var(--rule);padding:2.4rem 2rem;text-align:center;ba
     <div class="rules-grid">
       <div class="rule-card c1">
         <div class="rc-head">
-          <div><div class="rc-title">Greedy</div><div class="rc-sub">BEST-FIRST SEARCH</div></div>
+          <div><div class="rc-title">Greedy</div></div>
           <span class="rc-formula">f(n) = h(n)</span>
         </div>
         <ul class="rc-list">
@@ -193,7 +191,7 @@ footer{border-top:1px solid var(--rule);padding:2.4rem 2rem;text-align:center;ba
       </div>
       <div class="rule-card c2">
         <div class="rc-head">
-          <div><div class="rc-title">A* Search</div><div class="rc-sub">OPTIMAL HEURISTIC SEARCH</div></div>
+          <div><div class="rc-title">A* Search</div></div>
           <span class="rc-formula">f(n) = g(n)+h(n)</span>
         </div>
         <ul class="rc-list">
@@ -217,20 +215,20 @@ footer{border-top:1px solid var(--rule);padding:2.4rem 2rem;text-align:center;ba
       <div class="algo-card c1" onclick="goPage('greedy')">
         <div class="ac-stripe"></div>
         <div class="ac-body">
-          <div class="ac-tag">LEVEL 1 · f(n) = h(n) · HEURISTIC ONLY</div>
+          <div class="ac-tag">f(n) = h(n)</div>
           <div class="ac-title">Greedy</div>
           <div class="ac-sub">GREEDY BEST-FIRST SEARCH</div>
-          <div class="ac-desc">Trace the algorithm step-by-step across the Romania map — from Arad to Bucharest — and learn how Greedy picks nodes without considering total path cost.</div>
+          <div class="ac-desc">Practice on a custom city network — trace the frontier, identify the Explored Set, and discover why Greedy's locally greedy choices lead to suboptimal paths</div>
           <div class="ac-footer"><span class="ac-count">10 questions</span><button class="ac-cta">Start →</button></div>
         </div>
       </div>
       <div class="algo-card c2" onclick="goPage('astar')">
         <div class="ac-stripe"></div>
         <div class="ac-body">
-          <div class="ac-tag">LEVEL 2 · f(n) = g+h · OPTIMAL PATH</div>
+          <div class="ac-tag">f(n) = g+h</div>
           <div class="ac-title">A* Search</div>
           <div class="ac-sub">A-STAR OPTIMAL SEARCH</div>
-          <div class="ac-desc">Build the expansion table step by step, compute f(n) for each node, and understand why A* always finds the lowest-cost path.</div>
+          <div class="ac-desc">Work through a station network step by step — calculate f-values, trace frontier updates, and understand why A* always finds the cheapest path</div>
           <div class="ac-footer"><span class="ac-count">10 questions</span><button class="ac-cta">Start →</button></div>
         </div>
       </div>
@@ -832,22 +830,22 @@ const GQ=[
   // Alpha's neighbors: Beta(h=22), Gamma(h=19), Lambda(h=21)
   // Trap: Beta is "top" visually, Lambda has h=21 (close to Beta)
   // Answer: Gamma h=19 is smallest
-  {t:"Greedy Graph Search starts at Alpha (h=28). After expanding Alpha, its three neighbors — Beta, Gamma, and Lambda — are added to the frontier. Which node does Greedy expand next, and why?",
+  {t:"Greedy Graph Search starts at Alpha. After expanding Alpha, its three neighbors — Beta, Gamma, and Lambda — are added to the frontier. Which node does Greedy expand next, and why?",
    g:CITY_SVG,
    opts:[
-     "Beta (h=22) — it is the first neighbor listed alphabetically",
-     "Lambda (h=21) — it has fewer outgoing edges so it's cheaper to process",
-     "Gamma (h=19) — it has the smallest h value in the entire frontier",
-     "Beta (h=22) — it appears at the top of the graph visually"
+     "Beta — it is the first neighbor listed alphabetically",
+     "Lambda — it has fewer outgoing edges so it's cheaper to process",
+     "Gamma — it has the smallest h value in the entire frontier",
+     "Beta — it appears at the top of the graph visually"
    ],
    ans:2,
-   fb:"✓ Greedy picks the globally smallest h in the frontier. After expanding Alpha: frontier = {Beta(22), Gamma(19), Lambda(21)}. Gamma h=19 is the minimum → expanded next. Visual position and alphabetical order are completely irrelevant. Lambda(h=21) is a common trap — it looks 'middle' but h=21 > h=19."},
+   fb:"✓ Greedy picks the globally smallest h in the frontier. After expanding Alpha: frontier = {Beta(22), Gamma(19), Lambda(21)}. Gamma h=19 is the minimum"},
 
   // Q2 — TRACE: After Alpha→Gamma expanded, what's in the frontier?
   // Gamma's neighbors: Delta(h=14), Theta(h=11), + back-edge Alpha(explored)
   // Frontier after: Beta(22), Lambda(21), Delta(14), Theta(11)
   // Which is explored? {Alpha, Gamma}
-  {t:"Greedy has expanded Alpha then Gamma. Gamma's neighbors are: Delta (h=14), Theta (h=11), and Alpha (already explored). What is the Explored Set and the Frontier at this point?",
+  {t:"Greedy has expanded Alpha then Gamma. Gamma's neighbors are: Delta, Theta, and Alpha. What is the Explored Set and the Frontier at this point?",
    g:CITY_SVG,
    opts:[
      "Explored: {Alpha, Beta, Gamma} — Frontier: {Delta(14), Theta(11), Lambda(21)}",
@@ -868,10 +866,10 @@ const GQ=[
   {t:"Greedy expands nodes in order of smallest h. Using the graph, what is the COMPLETE expansion sequence from Alpha to the goal Zeta?",
    g:CITY_SVG,
    opts:[
-     "Alpha → Beta → Eta → Kappa → Zeta (cost = 4+3+9+3 = 19)",
-     "Alpha → Gamma → Delta → Kappa → Zeta (cost = 6+4+6+3 = 19)",
-     "Alpha → Gamma → Theta → Zeta (cost = 6+7+5 = 18)",
-     "Alpha → Beta → Eta → Zeta via dashed edge (cost = 4+3+16 = 23)"
+     "Alpha → Beta → Eta → Kappa → Zeta",
+     "Alpha → Gamma → Delta → Kappa → Zeta",
+     "Alpha → Gamma → Theta → Zeta",
+     "Alpha → Beta → Eta → Zeta"
    ],
    ans:2,
    fb:"✓ Step-by-step: ①Alpha expanded → frontier {Beta(22), Gamma(19), Lambda(21)}. ②Gamma(19) is min → expanded → frontier {Beta(22), Lambda(21), Delta(14), Theta(11)}. ③Theta(11) is min → expanded → frontier {Beta(22), Lambda(21), Delta(14), Zeta(0)}. ④Zeta(0) is min → GOAL! Path: Alpha→Gamma→Theta→Zeta, cost=6+7+5=18. Note: this happens to also be the optimal path — Greedy got lucky here."},
@@ -880,13 +878,13 @@ const GQ=[
   // If we block the Theta→Zeta edge (or if Theta had h=25 instead of 11),
   // Greedy would go Beta→Eta→Kappa→Zeta (cost=19) instead.
   // Question: WHY does h(Theta)=11 matter so much?
-  {t:"In this graph, Greedy finds the optimal path (cost=18) purely by luck. Suppose h(Theta) was changed from 11 to 25. Keeping all other h values the same — what would Greedy's new path and cost be?",
+  {t:"In this graph, Greedy finds the optimal path purely by luck. Suppose h(Theta) was changed from 11 to 25. Keeping all other h values the same — what would Greedy's new path and cost be?",
    g:CITY_SVG,
    opts:[
-     "Still Alpha→Gamma→Theta→Zeta (cost=18) — Greedy always finds optimal",
-     "Alpha→Gamma→Delta→Kappa→Zeta (cost=6+4+6+3=19) — Delta(h=14) beats Theta(h=25)",
-     "Alpha→Beta→Eta→Kappa→Zeta (cost=4+3+9+3=19) — Beta(h=22) chosen over Gamma(h=19)",
-     "Alpha→Beta→Eta→Zeta via dashed edge (cost=4+3+16=23)"
+     "Still Alpha→Gamma→Theta→Zeta — Greedy always finds optimal",
+     "Alpha→Gamma→Delta→Kappa→Zeta — Delta(h=14) beats Theta(h=25)",
+     "Alpha→Beta→Eta→Kappa→Zeta — Beta(h=22) chosen over Gamma(h=19)",
+     "Alpha→Beta→Eta→Zeta "
    ],
    ans:1,
    fb:"✓ If h(Theta)=25, the frontier after expanding Gamma becomes: {Beta(22), Lambda(21), Delta(14), Theta(25)}. Now Delta(14) < Beta(22) < Theta(25) → Greedy picks Delta next. Delta's neighbors: Kappa(h=8) and Gamma(explored). After expanding Delta: {Beta(22), Lambda(21), Theta(25), Kappa(8)} → Kappa(8) picked → expands to Zeta(0). Path: Alpha→Gamma→Delta→Kappa→Zeta, cost=19. This shows Greedy's path depends ENTIRELY on h values, not actual edge costs."},
@@ -894,7 +892,7 @@ const GQ=[
   // Q5 — TRAP: Node that's in Frontier vs Explored — what's the difference?
   // After Alpha→Gamma→Theta expanded: Explored={Alpha,Gamma,Theta}, Frontier={Beta(22),Lambda(21),Delta(14),Zeta(0)}
   // Zeta is in Frontier. Student must identify: Zeta not yet 'found' until it's POPPED and goal-tested
-  {t:"After expanding Alpha→Gamma→Theta, the frontier contains Zeta(h=0). A student says 'Zeta is in the frontier so the search is complete.' Is this correct?",
+  {t:"After expanding Alpha→Gamma→Theta, the frontier contains Zeta. A student says 'Zeta is in the frontier so the search is complete.' Is this correct?",
    g:CITY_SVG,
    opts:[
      "Yes — as soon as Zeta appears in the frontier, the search terminates",
@@ -1129,7 +1127,7 @@ const AQ=[
   // S expanded first (g=0). Neighbors: P(cost=2,h=8), Q(cost=5,h=7), R(cost=1,h=9)
   // f(P)=10, f(Q)=12, f(R)=10. Tie between P and R — P expanded first (alphabetical/order)
   // Trap: Q has lowest h=7 but f=12 is highest → Greedy would pick Q, A* picks P or R
-  {t:"A* starts at S (g=0, h=10). After expanding S, compute f(n) for each neighbor. Which node does A* expand next — and why does the node with the lowest h NOT get picked?",
+  {t:"A* starts at S. After expanding S, compute f(n) for each neighbor. Which node does A* expand next — and why does the node with the lowest h NOT get picked?",
    g:ASTAR_CITY,
    opts:[
      "Q (h=7) — A* always picks the smallest h, same as Greedy",
