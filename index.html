@@ -27,8 +27,15 @@ nav{position:sticky;top:0;z-index:200;height:58px;background:#d6ebe0;border-bott
 .nav-back:hover{background:var(--cream2);color:var(--ink)}
 .nav-back.show{display:block}
 .hero{max-width:860px;margin:0 auto;padding:5.5rem 2rem 4.5rem;text-align:center;}
-.hero-eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--ink4);text-transform:uppercase;margin-bottom:1.8rem;}
-.hero-h1{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,6vw,4.6rem);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:.8rem;}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;          /* أكبر */
+  letter-spacing: 0.1em;      /* أقل */
+  color: #222;                /* أو #fff لو الخلفية غامقة */
+  font-weight: 500;           /* أو 600 */
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}.hero-h1{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,6vw,4.6rem);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:.8rem;}
 .hero-h1 .g1{color:var(--green)}.hero-h1 .g2{color:var(--green3)}
 .hero-rule{width:48px;height:2px;background:var(--rule2);margin:1.5rem auto}
 .hero-p{font-size:1rem;color:var(--ink3);line-height:1.8;max-width:500px;margin:0 auto 2.8rem}
