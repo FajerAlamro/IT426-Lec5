@@ -27,15 +27,8 @@ nav{position:sticky;top:0;z-index:200;height:58px;background:#d6ebe0;border-bott
 .nav-back:hover{background:var(--cream2);color:var(--ink)}
 .nav-back.show{display:block}
 .hero{max-width:860px;margin:0 auto;padding:5.5rem 2rem 4.5rem;text-align:center;}
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  color: #666;   /* رمادي متوازن */
-  font-weight: 500;
-  text-transform: uppercase;
-  margin-bottom: 1.4rem;
-}.hero-h1{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,6vw,4.6rem);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:.8rem;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;color:#666;font-weight:500;text-transform:uppercase;margin-bottom:1.4rem;}
+.hero-h1{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,6vw,4.6rem);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:.8rem;}
 .hero-h1 .g1{color:var(--green)}.hero-h1 .g2{color:var(--green3)}
 .hero-rule{width:48px;height:2px;background:var(--rule2);margin:1.5rem auto}
 .hero-p{font-size:1rem;color:var(--ink3);line-height:1.8;max-width:500px;margin:0 auto 2.8rem}
@@ -269,92 +262,64 @@ footer{border-top:1px solid var(--rule);padding:2.4rem 2rem;text-align:center;ba
 
 <script>
 /* ── SVG GRAPHS ── */
-
-// GQ1: Full 7-node Romania subgraph — Arad expanded, now at Sibiu level
-// Question: which node gets expanded AFTER Sibiu?
-// Sibiu's neighbors: Fagaras(h=176), Rimnicu(h=193), Oradea(h=380), Arad(explored)
-// Frontier also has Timisoara(h=329), Zerind(h=374) from Arad
-// Smallest overall h = Fagaras(176) — but it's NOT obvious because Rimnicu(193) is also small
-// Distractor: students may pick Rimnicu since it's "closer geographically" or confuse h values
 const GQ1_SVG = `<svg width="480" height="200" viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
-  <!-- edges from Arad (explored) -->
   <line x1="80" y1="90" x2="160" y2="50" stroke="#d4e8db" stroke-width="1.2" stroke-dasharray="4,3"/>
   <line x1="80" y1="90" x2="160" y2="90" stroke="#d4e8db" stroke-width="1.2" stroke-dasharray="4,3"/>
   <line x1="80" y1="90" x2="160" y2="140" stroke="#d4e8db" stroke-width="1.2" stroke-dasharray="4,3"/>
-  <!-- edges from Sibiu (being expanded now) -->
   <line x1="200" y1="50" x2="290" y2="20" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="200" y1="50" x2="290" y2="60" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="200" y1="50" x2="290" y2="110" stroke="#b8d4c4" stroke-width="1.5"/>
-  <!-- Arad — explored, greyed -->
   <circle cx="60" cy="90" r="20" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="60" y="87" fill="#9ab8a4" text-anchor="middle" font-size="9" font-weight="600">Arad</text>
   <text x="60" y="98" fill="#b8d4c4" text-anchor="middle" font-size="8">explored</text>
-  <!-- Sibiu — currently being expanded -->
   <circle cx="180" cy="50" r="20" fill="#d4e8db" stroke="#2a7a50" stroke-width="2"/>
   <text x="180" y="47" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Sibiu</text>
   <text x="180" y="58" fill="#2a7a50" text-anchor="middle" font-size="8">expanding</text>
-  <!-- Timisoara — in frontier -->
   <circle cx="180" cy="100" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="180" y="97" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Timis.</text>
   <text x="180" y="108" fill="#5a7a65" text-anchor="middle" font-size="8">h=329</text>
-  <!-- Zerind — in frontier -->
   <circle cx="180" cy="150" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="180" y="147" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Zerind</text>
   <text x="180" y="158" fill="#5a7a65" text-anchor="middle" font-size="8">h=374</text>
-  <!-- Fagaras — Sibiu's neighbor -->
   <circle cx="310" cy="20" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="310" y="17" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Fagrs.</text>
   <text x="310" y="28" fill="#5a7a65" text-anchor="middle" font-size="8">h=176</text>
-  <!-- Rimnicu — Sibiu's neighbor -->
   <circle cx="310" cy="65" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="310" y="62" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Rimn.</text>
   <text x="310" y="73" fill="#5a7a65" text-anchor="middle" font-size="8">h=193</text>
-  <!-- Oradea — Sibiu's neighbor -->
   <circle cx="310" cy="115" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="310" y="112" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Oradea</text>
   <text x="310" y="123" fill="#5a7a65" text-anchor="middle" font-size="8">h=380</text>
-  <!-- legend -->
   <text x="10" y="185" fill="#9ab8a4" font-size="7">--- = already explored path</text>
 </svg>`;
 
-// GQ2: Partial expansion trace — 5-node frontier table after 3 expansions
-// Arad→Sibiu→Fagaras expanded. Frontier has mixed nodes from multiple parents.
-// Students must identify which node gets expanded NEXT from a messy frontier
-// Trick: Pitesti(h=98) is there but wasn't reachable yet — distractor
-// Real answer: Bucharest(h=0) from Fagaras path
 const GQ2_SVG = `<svg width="440" height="170" viewBox="0 0 440 170" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="220" y="14" fill="#5a7a65" text-anchor="middle" font-size="9" font-weight="600">FRONTIER STATE — after expanding: Arad → Sibiu → Fagaras</text>
-  <!-- header -->
   <rect x="8" y="20" width="424" height="20" rx="3" fill="#d4e8db"/>
   <text x="90" y="34" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="700">Node</text>
   <text x="185" y="34" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="700">h(n)</text>
   <text x="280" y="34" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="700">Came from</text>
   <text x="390" y="34" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="700">In frontier?</text>
-  <!-- row 1 -->
   <rect x="8" y="40" width="424" height="18" fill="#fff"/>
   <text x="90" y="53" fill="#1a2e24" text-anchor="middle" font-size="8">Bucharest</text>
   <text x="185" y="53" fill="#1a2e24" text-anchor="middle" font-size="8">0</text>
   <text x="280" y="53" fill="#5a7a65" text-anchor="middle" font-size="8">Fagaras</text>
   <text x="390" y="53" fill="#1a2e24" text-anchor="middle" font-size="8">✓</text>
-  <!-- row 2 -->
   <rect x="8" y="58" width="424" height="18" fill="#f8f8f8"/>
   <text x="90" y="71" fill="#1a2e24" text-anchor="middle" font-size="8">Rimnicu</text>
   <text x="185" y="71" fill="#1a2e24" text-anchor="middle" font-size="8">193</text>
   <text x="280" y="71" fill="#5a7a65" text-anchor="middle" font-size="8">Sibiu</text>
   <text x="390" y="71" fill="#1a2e24" text-anchor="middle" font-size="8">✓</text>
-  <!-- row 3 -->
   <rect x="8" y="76" width="424" height="18" fill="#fff"/>
   <text x="90" y="89" fill="#1a2e24" text-anchor="middle" font-size="8">Timisoara</text>
   <text x="185" y="89" fill="#1a2e24" text-anchor="middle" font-size="8">329</text>
   <text x="280" y="89" fill="#5a7a65" text-anchor="middle" font-size="8">Arad</text>
   <text x="390" y="89" fill="#1a2e24" text-anchor="middle" font-size="8">✓</text>
-  <!-- row 4 -->
   <rect x="8" y="94" width="424" height="18" fill="#f8f8f8"/>
   <text x="90" y="107" fill="#1a2e24" text-anchor="middle" font-size="8">Zerind</text>
   <text x="185" y="107" fill="#1a2e24" text-anchor="middle" font-size="8">374</text>
   <text x="280" y="107" fill="#5a7a65" text-anchor="middle" font-size="8">Arad</text>
   <text x="390" y="107" fill="#1a2e24" text-anchor="middle" font-size="8">✓</text>
-  <!-- row 5 -->
   <rect x="8" y="112" width="424" height="18" fill="#fff"/>
   <text x="90" y="125" fill="#1a2e24" text-anchor="middle" font-size="8">Oradea</text>
   <text x="185" y="125" fill="#1a2e24" text-anchor="middle" font-size="8">380</text>
@@ -364,60 +329,43 @@ const GQ2_SVG = `<svg width="440" height="170" viewBox="0 0 440 170" xmlns="http
   <text x="8" y="162" fill="#c05050" font-size="7">Note: Pitesti not yet reachable in this trace</text>
 </svg>`;
 
-// GQ3: Two-path trap — single graph branching from Sibiu to Fagaras (top) and Rimnicu→Pitesti (bottom)
 const GQ3_SVG = `<svg width="460" height="200" viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
-  <!-- Arad → Sibiu -->
   <line x1="52" y1="100" x2="118" y2="100" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="85" y="93" fill="#9ab8a4" font-size="8" text-anchor="middle">140</text>
-  <!-- Sibiu → Fagaras (top branch) -->
   <line x1="158" y1="88" x2="238" y2="48" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="192" y="59" fill="#9ab8a4" font-size="8" text-anchor="middle">211</text>
-  <!-- Fagaras → Bucharest -->
   <line x1="278" y1="42" x2="368" y2="90" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="330" y="58" fill="#9ab8a4" font-size="8" text-anchor="middle">99</text>
-  <!-- Sibiu → Rimnicu (bottom branch) -->
   <line x1="158" y1="112" x2="238" y2="152" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="192" y="148" fill="#9ab8a4" font-size="8" text-anchor="middle">80</text>
-  <!-- Rimnicu → Pitesti -->
   <line x1="278" y1="155" x2="340" y2="130" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="315" y="152" fill="#9ab8a4" font-size="8" text-anchor="middle">97</text>
-  <!-- Pitesti → Bucharest -->
   <line x1="368" y1="118" x2="388" y2="103" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="385" y="113" fill="#9ab8a4" font-size="7" text-anchor="middle">101</text>
-  <!-- nodes -->
   <circle cx="34" cy="100" r="20" fill="#e8f2ec" stroke="#2a7a50" stroke-width="2"/>
   <text x="34" y="97" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Arad</text>
   <text x="34" y="108" fill="#5a7a65" text-anchor="middle" font-size="8">h=366</text>
   <circle cx="138" cy="100" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="138" y="97" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Sibiu</text>
   <text x="138" y="108" fill="#5a7a65" text-anchor="middle" font-size="8">h=253</text>
-  <!-- top branch -->
   <circle cx="258" cy="38" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="258" y="35" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Fagrs.</text>
   <text x="258" y="46" fill="#5a7a65" text-anchor="middle" font-size="8">h=176</text>
-  <!-- bottom branch -->
   <circle cx="258" cy="158" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="258" y="155" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Rimn.</text>
   <text x="258" y="166" fill="#5a7a65" text-anchor="middle" font-size="8">h=193</text>
   <circle cx="355" cy="122" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="355" y="119" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Pitesti</text>
   <text x="355" y="130" fill="#5a7a65" text-anchor="middle" font-size="8">h=98</text>
-  <!-- Bucharest (goal) -->
   <circle cx="398" cy="95" r="20" fill="#e8f5ee" stroke="#2a7a50" stroke-width="2"/>
   <text x="398" y="92" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Buch.</text>
   <text x="398" y="103" fill="#2a7a50" text-anchor="middle" font-size="7">GOAL</text>
-  <!-- route labels -->
   <text x="230" y="14" fill="#5a7a65" text-anchor="middle" font-size="7" font-weight="600">Route A (Greedy): Arad→Sibiu→Fagaras→Buch = 450km</text>
   <text x="230" y="192" fill="#5a7a65" text-anchor="middle" font-size="7" font-weight="600">Route B (Optimal): Arad→Sibiu→Rimnicu→Pitesti→Buch = 418km</text>
 </svg>`;
 
-// GQ4: Tricky — graph with a node that has LOW h but is actually a dead end (no path to goal from there)
-// Well actually we'll do: node with lower h but HIGHER actual cost trap
-// Shows Lugoj(h=244) between Timisoara and Mehadia — Greedy goes there but it's suboptimal
-// Students may wrongly assume low h = always expanded
 const GQ4_SVG = `<svg width="440" height="175" viewBox="0 0 440 175" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="220" y="13" fill="#5a7a65" text-anchor="middle" font-size="8" font-weight="600">Greedy expands Timisoara. What gets added to the frontier?</text>
-  <!-- edges -->
   <line x1="60" y1="88" x2="130" y2="60" stroke="#d4e8db" stroke-width="1.2" stroke-dasharray="3,3"/>
   <line x1="60" y1="88" x2="130" y2="88" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="60" y1="88" x2="130" y2="130" stroke="#b8d4c4" stroke-width="1.5"/>
@@ -425,42 +373,33 @@ const GQ4_SVG = `<svg width="440" height="175" viewBox="0 0 440 175" xmlns="http
   <text x="202" y="67" fill="#9ab8a4" font-size="7" text-anchor="middle">111</text>
   <line x1="170" y1="88" x2="240" y2="115" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="202" y="112" fill="#9ab8a4" font-size="7" text-anchor="middle">70</text>
-  <!-- Arad explored -->
   <circle cx="40" cy="88" r="18" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="40" y="85" fill="#9ab8a4" text-anchor="middle" font-size="8">Arad</text>
   <text x="40" y="96" fill="#b8d4c4" text-anchor="middle" font-size="7">explored</text>
-  <!-- Sibiu explored -->
   <circle cx="150" cy="55" r="18" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="150" y="52" fill="#9ab8a4" text-anchor="middle" font-size="8">Sibiu</text>
   <text x="150" y="63" fill="#b8d4c4" text-anchor="middle" font-size="7">explored</text>
-  <!-- Timisoara being expanded -->
   <circle cx="150" cy="88" r="18" fill="#d4e8db" stroke="#2a7a50" stroke-width="2"/>
   <text x="150" y="85" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="600">Timis.</text>
   <text x="150" y="96" fill="#2a7a50" text-anchor="middle" font-size="7">expanding</text>
-  <!-- Zerind in frontier -->
   <circle cx="150" cy="133" r="18" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="150" y="130" fill="#1a2e24" text-anchor="middle" font-size="8">Zerind</text>
   <text x="150" y="141" fill="#5a7a65" text-anchor="middle" font-size="7">h=374</text>
-  <!-- Lugoj — Timisoara's neighbor, lower h than expected -->
   <circle cx="260" cy="68" r="18" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="260" y="65" fill="#1a2e24" text-anchor="middle" font-size="8">Lugoj</text>
   <text x="260" y="76" fill="#5a7a65" text-anchor="middle" font-size="7">h=244</text>
-  <!-- Mehadia — Timisoara's other neighbor -->
   <circle cx="260" cy="118" r="18" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="260" y="115" fill="#1a2e24" text-anchor="middle" font-size="8">Mehadia</text>
   <text x="260" y="126" fill="#5a7a65" text-anchor="middle" font-size="7">h=241</text>
   <text x="8" y="162" fill="#9ab8a4" font-size="7">Current frontier (before expansion): Zerind(374). Explored: {Arad, Sibiu, Timisoara}</text>
 </svg>`;
 
-// GQ5: Expansion order trap — 6 nodes in frontier, student must rank correctly
-// Mix of nodes from different expansion levels. h values are deliberately close to confuse.
 const GQ5_SVG = `<svg width="440" height="155" viewBox="0 0 440 155" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="220" y="13" fill="#5a7a65" text-anchor="middle" font-size="9" font-weight="600">FRONTIER — mid-search state. Which is the THIRD node Greedy expands overall?</text>
   <rect x="8" y="20" width="424" height="18" rx="3" fill="#d4e8db"/>
   <text x="85" y="33" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="700">Node</text>
   <text x="190" y="33" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="700">h(n)</text>
   <text x="320" y="33" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="700">Came via</text>
-  <!-- rows -->
   <rect x="8" y="38" width="424" height="17" fill="#fff"/>
   <text x="85" y="50" fill="#1a2e24" text-anchor="middle" font-size="8">Fagaras</text>
   <text x="190" y="50" fill="#1a2e24" text-anchor="middle" font-size="8">176</text>
@@ -488,12 +427,8 @@ const GQ5_SVG = `<svg width="440" height="155" viewBox="0 0 440 155" xmlns="http
   <text x="8" y="152" fill="#9ab8a4" font-size="7">Expansion order so far: 1st = Arad, 2nd = Sibiu. What is 3rd?</text>
 </svg>`;
 
-// GQ6: "Which node is NEVER expanded by Greedy on the Arad→Bucharest path?"
-// Full Romania subgraph — many nodes, students must trace the greedy path
-// Rimnicu(h=193) is on optimal path but Greedy skips it in favor of Fagaras(h=176)
 const GQ6_SVG = `<svg width="460" height="200" viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="230" y="13" fill="#5a7a65" text-anchor="middle" font-size="8" font-weight="600">Romania subgraph — trace Greedy from Arad to Bucharest</text>
-  <!-- edges -->
   <line x1="55" y1="100" x2="120" y2="65" stroke="#b8d4c4" stroke-width="1.2"/>
   <line x1="55" y1="100" x2="120" y2="120" stroke="#b8d4c4" stroke-width="1.2"/>
   <line x1="55" y1="100" x2="120" y2="155" stroke="#b8d4c4" stroke-width="1.2"/>
@@ -503,7 +438,6 @@ const GQ6_SVG = `<svg width="460" height="200" viewBox="0 0 460 200" xmlns="http
   <line x1="263" y1="45" x2="340" y2="75" stroke="#b8d4c4" stroke-width="1.2"/>
   <line x1="263" y1="85" x2="340" y2="75" stroke="#b8d4c4" stroke-width="1.2"/>
   <line x1="263" y1="125" x2="340" y2="75" stroke="#b8d4c4" stroke-width="1.2"/>
-  <!-- nodes -->
   <circle cx="35" cy="100" r="18" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="35" y="97" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="600">Arad</text>
   <text x="35" y="108" fill="#5a7a65" text-anchor="middle" font-size="7">h=366</text>
@@ -530,18 +464,14 @@ const GQ6_SVG = `<svg width="460" height="200" viewBox="0 0 460 200" xmlns="http
   <text x="358" y="83" fill="#2a7a50" text-anchor="middle" font-size="7">GOAL h=0</text>
 </svg>`;
 
-// GQ7: Explored set trap — node appears in frontier AND explored. What does graph search do?
 const GQ7_SVG = `<svg width="420" height="155" viewBox="0 0 420 155" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="210" y="13" fill="#5a7a65" text-anchor="middle" font-size="8" font-weight="600">Sibiu appears in both Explored AND as a neighbor of Rimnicu. What happens?</text>
-  <!-- chain: Arad → Sibiu (explored) → Fagaras → Rimnicu → Sibiu (again!) -->
   <line x1="40" y1="80" x2="100" y2="80" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="138" y1="80" x2="198" y2="55" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="138" y1="80" x2="198" y2="105" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="236" y1="55" x2="296" y2="80" stroke="#b8d4c4" stroke-width="1.5"/>
-  <!-- dashed back-edge from Rimnicu to Sibiu -->
   <line x1="296" y1="75" x2="238" y2="85" stroke="#c05050" stroke-width="1.5" stroke-dasharray="4,3"/>
   <text x="268" y="68" fill="#c05050" font-size="7" text-anchor="middle">back-edge!</text>
-  <!-- nodes -->
   <circle cx="22" cy="80" r="17" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="22" y="77" fill="#9ab8a4" text-anchor="middle" font-size="7">Arad</text>
   <text x="22" y="87" fill="#b8d4c4" text-anchor="middle" font-size="6">explored</text>
@@ -560,55 +490,43 @@ const GQ7_SVG = `<svg width="420" height="155" viewBox="0 0 420 155" xmlns="http
   <text x="210" y="140" fill="#9ab8a4" font-size="7" text-anchor="middle">Rimnicu's neighbors: Sibiu(explored), Pitesti(h=98), Craiova(h=160)</text>
 </svg>`;
 
-// GQ8: h-value inconsistency trap — one h value is accidentally > actual distance
-// Students must identify which node makes h inadmissible for A* (but the question is about Greedy behavior)
 const GQ8_SVG = `<svg width="420" height="150" viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="210" y="13" fill="#5a7a65" text-anchor="middle" font-size="8" font-weight="600">Greedy is at Pitesti. Which node does it expand next?</text>
-  <!-- Pitesti's neighbors -->
   <line x1="100" y1="75" x2="170" y2="45" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="130" y="50" fill="#9ab8a4" font-size="7" text-anchor="middle">101</text>
   <line x1="100" y1="75" x2="170" y2="80" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="130" y="74" fill="#9ab8a4" font-size="7" text-anchor="middle">138</text>
   <line x1="100" y1="75" x2="170" y2="118" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="128" y="108" fill="#9ab8a4" font-size="7" text-anchor="middle">146</text>
-  <!-- Pitesti expanding -->
   <circle cx="80" cy="75" r="19" fill="#d4e8db" stroke="#2a7a50" stroke-width="2"/>
   <text x="80" y="72" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="600">Pitesti</text>
   <text x="80" y="83" fill="#2a7a50" text-anchor="middle" font-size="7">h=98</text>
-  <!-- Bucharest -->
   <circle cx="190" cy="44" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="190" y="41" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="600">Buch.</text>
   <text x="190" y="52" fill="#5a7a65" text-anchor="middle" font-size="7">h=0</text>
-  <!-- Craiova -->
   <circle cx="190" cy="82" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="190" y="79" fill="#1a2e24" text-anchor="middle" font-size="8" font-weight="600">Craiova</text>
   <text x="190" y="90" fill="#5a7a65" text-anchor="middle" font-size="7">h=160</text>
-  <!-- Rimnicu (already explored — trick!) -->
   <circle cx="190" cy="120" r="19" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="190" y="117" fill="#9ab8a4" text-anchor="middle" font-size="8">Rimn.</text>
   <text x="190" y="128" fill="#b8d4c4" text-anchor="middle" font-size="7">explored</text>
-  <!-- Also in frontier from before -->
   <text x="8" y="145" fill="#9ab8a4" font-size="7">Frontier also contains: Timisoara(h=329), Zerind(h=374), Oradea(h=380)</text>
 </svg>`;
 
-// GQ9: Path cost vs h — which path does Greedy take when two routes both reach the same next node?
 const GQ9_SVG = `<svg width="400" height="160" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="200" y="13" fill="#5a7a65" text-anchor="middle" font-size="8" font-weight="600">Two routes reach Pitesti. Which path does Greedy record?</text>
-  <!-- Route 1: Arad→Sibiu→Rimnicu→Pitesti -->
   <line x1="35" y1="60" x2="105" y2="60" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="70" y="54" fill="#9ab8a4" font-size="7" text-anchor="middle">g: 140</text>
   <line x1="143" y1="60" x2="213" y2="60" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="178" y="54" fill="#9ab8a4" font-size="7" text-anchor="middle">g: 80</text>
   <line x1="251" y1="60" x2="321" y2="80" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="292" y="62" fill="#9ab8a4" font-size="7" text-anchor="middle">g: 97</text>
-  <!-- Route 2: Arad→Sibiu→Fagaras→Bucharest (different path, not to Pitesti) -->
   <line x1="35" y1="110" x2="105" y2="110" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="70" y="104" fill="#9ab8a4" font-size="7" text-anchor="middle">g: 140</text>
   <line x1="143" y1="110" x2="213" y2="110" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="178" y="104" fill="#9ab8a4" font-size="7" text-anchor="middle">g: 211</text>
   <line x1="251" y1="110" x2="321" y2="90" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="292" y="112" fill="#9ab8a4" font-size="7" text-anchor="middle">g: 211</text>
-  <!-- nodes row 1 -->
   <circle cx="18" cy="60" r="16" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="18" y="57" fill="#1a2e24" text-anchor="middle" font-size="7" font-weight="600">Arad</text>
   <text x="18" y="67" fill="#5a7a65" text-anchor="middle" font-size="6">h=366</text>
@@ -618,14 +536,12 @@ const GQ9_SVG = `<svg width="400" height="160" viewBox="0 0 400 160" xmlns="http
   <circle cx="232" cy="60" r="16" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="232" y="57" fill="#9ab8a4" text-anchor="middle" font-size="7">Rimn.</text>
   <text x="232" y="67" fill="#b8d4c4" text-anchor="middle" font-size="6">exp.</text>
-  <!-- nodes row 2 -->
   <circle cx="124" cy="110" r="16" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="124" y="107" fill="#9ab8a4" text-anchor="middle" font-size="7">Sibiu</text>
   <text x="124" y="117" fill="#b8d4c4" text-anchor="middle" font-size="6">exp.</text>
   <circle cx="232" cy="110" r="16" fill="#e8f2ec" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="232" y="107" fill="#9ab8a4" text-anchor="middle" font-size="7">Fagrs.</text>
   <text x="232" y="117" fill="#b8d4c4" text-anchor="middle" font-size="6">exp.</text>
-  <!-- Pitesti — destination -->
   <circle cx="338" cy="82" r="16" fill="#fff" stroke="#b8d4c4" stroke-width="2"/>
   <text x="338" y="79" fill="#1a2e24" text-anchor="middle" font-size="7" font-weight="600">Pitesti</text>
   <text x="338" y="89" fill="#5a7a65" text-anchor="middle" font-size="6">h=98</text>
@@ -634,15 +550,12 @@ const GQ9_SVG = `<svg width="400" height="160" viewBox="0 0 400 160" xmlns="http
   <text x="200" y="152" fill="#c05050" font-size="7" text-anchor="middle">Both paths reach Pitesti. Greedy only cares about h(Pitesti). What does it record?</text>
 </svg>`;
 
-// GQ10: Full path trace — what is the COMPLETE sequence Greedy expands from Arad to Bucharest?
 const GQ10_SVG = `<svg width="440" height="130" viewBox="0 0 440 130" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
   <text x="220" y="13" fill="#5a7a65" text-anchor="middle" font-size="8" font-weight="600">Complete Greedy expansion trace — Arad to Bucharest (h values shown)</text>
-  <!-- horizontal chain -->
   <line x1="50" y1="65" x2="100" y2="65" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="138" y1="65" x2="188" y2="65" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="226" y1="65" x2="276" y2="65" stroke="#b8d4c4" stroke-width="1.5"/>
   <line x1="314" y1="65" x2="364" y2="65" stroke="#b8d4c4" stroke-width="1.5"/>
-  <!-- nodes in order -->
   <circle cx="32" cy="65" r="17" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="32" y="62" fill="#1a2e24" text-anchor="middle" font-size="7" font-weight="600">Arad</text>
   <text x="32" y="73" fill="#5a7a65" text-anchor="middle" font-size="6">h=366</text>
@@ -659,604 +572,249 @@ const GQ10_SVG = `<svg width="440" height="130" viewBox="0 0 440 130" xmlns="htt
   <text x="295" y="62" fill="#1a2e24" text-anchor="middle" font-size="7" font-weight="600">Buch.</text>
   <text x="295" y="73" fill="#5a7a65" text-anchor="middle" font-size="6">h=0</text>
   <text x="295" y="92" fill="#9ab8a4" text-anchor="middle" font-size="7">④?</text>
-  <!-- alternative node shown below -->
   <text x="220" y="115" fill="#9ab8a4" text-anchor="middle" font-size="7">Note: Rimnicu(h=193) was also in frontier at step ③ — did Greedy expand it?</text>
 </svg>`;
 
-
-
-
-
-const ASTAR_Q2_SVG = `<svg width="320" height="160" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
-  <line x1="100" y1="68" x2="160" y2="34" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="124" y="44" fill="#9ab8a4" font-size="9" text-anchor="middle">140</text>
-  <line x1="100" y1="80" x2="160" y2="80" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="124" y="75" fill="#9ab8a4" font-size="9" text-anchor="middle">118</text>
-  <line x1="100" y1="92" x2="160" y2="126" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="124" y="118" fill="#9ab8a4" font-size="9" text-anchor="middle">75</text>
-  <circle cx="80" cy="80" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.8"/>
-  <text x="80" y="77" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">Arad</text>
-  <text x="80" y="89" fill="#5a7a65" text-anchor="middle" font-size="9">g=0</text>
-  <circle cx="180" cy="30" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.8"/>
-  <text x="180" y="27" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">Sibiu</text>
-  <text x="180" y="39" fill="#5a7a65" text-anchor="middle" font-size="9">f=393</text>
-  <circle cx="180" cy="80" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.8"/>
-  <text x="180" y="77" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">Timis.</text>
-  <text x="180" y="89" fill="#5a7a65" text-anchor="middle" font-size="9">f=447</text>
-  <circle cx="180" cy="130" r="20" fill="#fff" stroke="#b8d4c4" stroke-width="1.8"/>
-  <text x="180" y="127" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">Zerind</text>
-  <text x="180" y="139" fill="#5a7a65" text-anchor="middle" font-size="9">f=449</text>
-</svg>`;
-
-/*
- ══════════════════════════════════════════════════════
-  CUSTOM GRAPH — "City Network" (fictional cities)
-  Start = Alpha (h=28), Goal = Zeta (h=0)
-  
-  Nodes & heuristics (straight-line to Zeta):
-    Alpha  h=28   (start)
-    Beta   h=22
-    Gamma  h=19
-    Delta  h=14
-    Eta    h=17
-    Theta  h=11
-    Kappa  h=8
-    Lambda h=21
-    Zeta   h=0    (GOAL)
-
-  Edges (undirected, with costs):
-    Alpha → Beta   cost=4
-    Alpha → Gamma  cost=6
-    Alpha → Lambda cost=10
-    Beta  → Delta  cost=5
-    Beta  → Eta    cost=3
-    Gamma → Delta  cost=4
-    Gamma → Theta  cost=7
-    Delta → Kappa  cost=6
-    Eta   → Kappa  cost=9
-    Eta   → Zeta   cost=16   ← trap: low cost but h(Eta)=17 misleads
-    Theta → Zeta   cost=5
-    Kappa → Zeta   cost=3
-    Lambda→ Gamma  cost=5
-
-  Greedy path (follows min h each step):
-    Alpha(28) → Beta(22) → Eta(17) → Kappa(8) → Zeta(0)
-    Path cost = 4+3+9+3 = 19
-
-  Optimal path (cheapest total):
-    Alpha(28) → Gamma(19) → Theta(11) → Zeta(0)
-    Cost = 6+7+5 = 18  ← shorter!
-
-  Greedy is suboptimal by 1 unit (19 vs 18).
-  The trick: h(Beta)=22 < h(Gamma)=19, so Greedy picks Beta first,
-  missing the cheaper Gamma→Theta→Zeta route.
- ══════════════════════════════════════════════════════
-*/
-
-// THE MAIN GRAPH — shown on Q1–Q5 (same diagram, different questions)
 const CITY_SVG = `<svg width="500" height="230" viewBox="0 0 500 230" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
-  <defs>
-    <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-      <polygon points="0 0,6 3,0 6" fill="#b8d4c4"/>
-    </marker>
-  </defs>
-  <!-- edges with cost labels -->
-  <!-- Alpha-Beta -->
   <line x1="62" y1="115" x2="148" y2="72" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="100" y="83" fill="#9ab8a4" font-size="8" text-anchor="middle">4</text>
-  <!-- Alpha-Gamma -->
   <line x1="62" y1="120" x2="148" y2="148" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="100" y="148" fill="#9ab8a4" font-size="8" text-anchor="middle">6</text>
-  <!-- Alpha-Lambda -->
   <line x1="55" y1="125" x2="82" y2="195" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="60" y="168" fill="#9ab8a4" font-size="8" text-anchor="middle">10</text>
-  <!-- Beta-Delta -->
   <line x1="172" y1="68" x2="248" y2="52" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="210" y="50" fill="#9ab8a4" font-size="8" text-anchor="middle">5</text>
-  <!-- Beta-Eta -->
   <line x1="172" y1="75" x2="245" y2="105" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="214" y="84" fill="#9ab8a4" font-size="8" text-anchor="middle">3</text>
-  <!-- Gamma-Delta -->
   <line x1="172" y1="145" x2="248" y2="58" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="218" y="108" fill="#9ab8a4" font-size="8" text-anchor="middle">4</text>
-  <!-- Gamma-Theta -->
   <line x1="172" y1="152" x2="248" y2="168" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="210" y="170" fill="#9ab8a4" font-size="8" text-anchor="middle">7</text>
-  <!-- Lambda-Gamma -->
   <line x1="102" y1="198" x2="158" y2="158" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="124" y="185" fill="#9ab8a4" font-size="8" text-anchor="middle">5</text>
-  <!-- Delta-Kappa -->
   <line x1="272" y1="52" x2="352" y2="88" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="318" y="62" fill="#9ab8a4" font-size="8" text-anchor="middle">6</text>
-  <!-- Eta-Kappa -->
   <line x1="270" y1="110" x2="350" y2="95" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="313" y="95" fill="#9ab8a4" font-size="8" text-anchor="middle">9</text>
-  <!-- Eta-Zeta (trap edge — long cost) -->
   <line x1="270" y1="118" x2="418" y2="145" stroke="#b8d4c4" stroke-width="1.4" stroke-dasharray="5,3"/>
   <text x="348" y="125" fill="#9ab8a4" font-size="8" text-anchor="middle">16</text>
-  <!-- Theta-Zeta -->
   <line x1="270" y1="168" x2="418" y2="155" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="348" y="172" fill="#9ab8a4" font-size="8" text-anchor="middle">5</text>
-  <!-- Kappa-Zeta -->
   <line x1="372" y1="90" x2="420" y2="140" stroke="#b8d4c4" stroke-width="1.4"/>
   <text x="404" y="108" fill="#9ab8a4" font-size="8" text-anchor="middle">3</text>
-
-  <!-- ── NODES ── -->
-  <!-- Alpha (start) -->
   <circle cx="42" cy="118" r="19" fill="#e8f2ec" stroke="#2a7a50" stroke-width="2"/>
   <text x="42" y="114" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="700">Alpha</text>
   <text x="42" y="126" fill="#2a7a50" text-anchor="middle" font-size="8">h=28</text>
-  <!-- Beta -->
   <circle cx="160" cy="68" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="160" y="64" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Beta</text>
   <text x="160" y="76" fill="#5a7a65" text-anchor="middle" font-size="8">h=22</text>
-  <!-- Gamma -->
   <circle cx="160" cy="150" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="160" y="146" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Gamma</text>
   <text x="160" y="158" fill="#5a7a65" text-anchor="middle" font-size="8">h=19</text>
-  <!-- Lambda -->
   <circle cx="92" cy="200" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="92" y="196" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Lambda</text>
   <text x="92" y="208" fill="#5a7a65" text-anchor="middle" font-size="8">h=21</text>
-  <!-- Delta -->
   <circle cx="260" cy="48" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="260" y="44" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Delta</text>
   <text x="260" y="56" fill="#5a7a65" text-anchor="middle" font-size="8">h=14</text>
-  <!-- Eta -->
   <circle cx="258" cy="112" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="258" y="108" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Eta</text>
   <text x="258" y="120" fill="#5a7a65" text-anchor="middle" font-size="8">h=17</text>
-  <!-- Theta -->
   <circle cx="258" cy="172" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="258" y="168" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Theta</text>
   <text x="258" y="180" fill="#5a7a65" text-anchor="middle" font-size="8">h=11</text>
-  <!-- Kappa -->
   <circle cx="362" cy="88" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
   <text x="362" y="84" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="600">Kappa</text>
   <text x="362" y="96" fill="#5a7a65" text-anchor="middle" font-size="8">h=8</text>
-  <!-- Zeta (GOAL) -->
   <circle cx="438" cy="150" r="21" fill="#e8f5ee" stroke="#2a7a50" stroke-width="2.5"/>
   <text x="438" y="146" fill="#1a2e24" text-anchor="middle" font-size="9" font-weight="700">Zeta</text>
   <text x="438" y="158" fill="#2a7a50" text-anchor="middle" font-size="8">GOAL h=0</text>
+  <text x="250" y="222" fill="#9ab8a4" text-anchor="middle" font-size="7">Edge numbers = travel cost · h = heuristic estimate to Zeta · --- = costly trap edge</text>
+</svg>`;
 
-  <!-- legend -->
-  <text x="250" y="222" fill="#9ab8a4" text-anchor="middle" font-size="7">Edge numbers = travel cost · h = heuristic (straight-line estimate to Zeta) · --- = costly trap edge</text>
+const ASTAR_CITY = `<svg width="520" height="240" viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
+  <line x1="58" y1="110" x2="148" y2="65" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="98" y="78" fill="#9ab8a4" font-size="8" text-anchor="middle">2</text>
+  <line x1="58" y1="118" x2="148" y2="140" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="97" y="138" fill="#9ab8a4" font-size="8" text-anchor="middle">5</text>
+  <line x1="55" y1="122" x2="148" y2="195" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="93" y="172" fill="#9ab8a4" font-size="8" text-anchor="middle">1</text>
+  <line x1="170" y1="60" x2="255" y2="42" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="212" y="41" fill="#9ab8a4" font-size="8" text-anchor="middle">4</text>
+  <line x1="172" y1="68" x2="255" y2="118" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="218" y="86" fill="#9ab8a4" font-size="8" text-anchor="middle">7</text>
+  <line x1="172" y1="138" x2="255" y2="122" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="216" y="124" fill="#9ab8a4" font-size="8" text-anchor="middle">2</text>
+  <line x1="172" y1="145" x2="255" y2="178" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="208" y="172" fill="#9ab8a4" font-size="8" text-anchor="middle">8</text>
+  <line x1="172" y1="192" x2="172" y2="152" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="162" y="175" fill="#9ab8a4" font-size="8" text-anchor="middle">3</text>
+  <line x1="172" y1="198" x2="255" y2="215" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="212" y="214" fill="#9ab8a4" font-size="8" text-anchor="middle">6</text>
+  <line x1="276" y1="40" x2="430" y2="110" stroke="#d9a0a0" stroke-width="1.4" stroke-dasharray="5,3"/>
+  <text x="362" y="62" fill="#d9a0a0" font-size="8" text-anchor="middle">9 ⚠</text>
+  <line x1="272" y1="120" x2="272" y2="172" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="262" y="150" fill="#9ab8a4" font-size="8" text-anchor="middle">1</text>
+  <line x1="278" y1="128" x2="278" y2="208" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="292" y="172" fill="#9ab8a4" font-size="8" text-anchor="middle">5</text>
+  <line x1="292" y1="178" x2="428" y2="122" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="366" y="142" fill="#9ab8a4" font-size="8" text-anchor="middle">2</text>
+  <line x1="292" y1="215" x2="428" y2="128" stroke="#b8d4c4" stroke-width="1.4"/>
+  <text x="368" y="185" fill="#9ab8a4" font-size="8" text-anchor="middle">3</text>
+  <circle cx="38" cy="115" r="19" fill="#e8f2ec" stroke="#2a7a50" stroke-width="2"/>
+  <text x="38" y="111" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="700">S</text>
+  <text x="38" y="123" fill="#2a7a50" text-anchor="middle" font-size="8">h=10</text>
+  <circle cx="160" cy="62" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
+  <text x="160" y="58" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">P</text>
+  <text x="160" y="70" fill="#5a7a65" text-anchor="middle" font-size="8">h=8</text>
+  <circle cx="160" cy="142" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
+  <text x="160" y="138" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">Q</text>
+  <text x="160" y="150" fill="#5a7a65" text-anchor="middle" font-size="8">h=7</text>
+  <circle cx="160" cy="198" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
+  <text x="160" y="194" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">R</text>
+  <text x="160" y="206" fill="#5a7a65" text-anchor="middle" font-size="8">h=9</text>
+  <circle cx="266" cy="38" r="19" fill="#fdf8f0" stroke="#d9a0a0" stroke-width="1.5"/>
+  <text x="266" y="34" fill="#7a4020" text-anchor="middle" font-size="10" font-weight="600">T</text>
+  <text x="266" y="46" fill="#c08050" text-anchor="middle" font-size="8">h=5 ⚠</text>
+  <circle cx="266" cy="120" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
+  <text x="266" y="116" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">U</text>
+  <text x="266" y="128" fill="#5a7a65" text-anchor="middle" font-size="8">h=6</text>
+  <circle cx="266" cy="180" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
+  <text x="266" y="176" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">V</text>
+  <text x="266" y="188" fill="#5a7a65" text-anchor="middle" font-size="8">h=3</text>
+  <circle cx="266" cy="218" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
+  <text x="266" y="214" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">W</text>
+  <text x="266" y="226" fill="#5a7a65" text-anchor="middle" font-size="8">h=4</text>
+  <circle cx="448" cy="120" r="21" fill="#e8f5ee" stroke="#2a7a50" stroke-width="2.5"/>
+  <text x="448" y="116" fill="#1a2e24" text-anchor="middle" font-size="11" font-weight="700">G</text>
+  <text x="448" y="128" fill="#2a7a50" text-anchor="middle" font-size="8">GOAL h=0</text>
+  <text x="260" y="14" fill="#9ab8a4" text-anchor="middle" font-size="7">Edge numbers = travel cost · h = heuristic estimate to G · ⚠ dashed = high-cost trap</text>
 </svg>`;
 
 /* ── GREEDY QUESTIONS ── */
 const GQ=[
-
-  // Q1 — TRACE: Which node does Greedy expand FIRST after Alpha?
-  // Alpha's neighbors: Beta(h=22), Gamma(h=19), Lambda(h=21)
-  // Trap: Beta is "top" visually, Lambda has h=21 (close to Beta)
-  // Answer: Gamma h=19 is smallest
   {t:"Greedy Graph Search starts at Alpha. After expanding Alpha, its three neighbors — Beta, Gamma, and Lambda — are added to the frontier. Which node does Greedy expand next, and why?",
    g:CITY_SVG,
-   opts:[
-     "Beta — it is the first neighbor listed alphabetically",
-     "Lambda — it has fewer outgoing edges so it's cheaper to process",
-     "Gamma — it has the smallest h value in the entire frontier",
-     "Beta — it appears at the top of the graph visually"
-   ],
+   opts:["Beta — it is the first neighbor listed alphabetically","Lambda — it has fewer outgoing edges so it's cheaper to process","Gamma — it has the smallest h value in the entire frontier","Beta — it appears at the top of the graph visually"],
    ans:2,
-   fb:"✓ Greedy picks the globally smallest h in the frontier. After expanding Alpha: frontier = {Beta(22), Gamma(19), Lambda(21)}. Gamma h=19 is the minimum"},
+   fb:"✓ Greedy always picks the node with the smallest h(n). Frontier = {Beta(22), Gamma(19), Lambda(21)}. Gamma wins with h=19."},
 
-  // Q2 — TRACE: After Alpha→Gamma expanded, what's in the frontier?
-  // Gamma's neighbors: Delta(h=14), Theta(h=11), + back-edge Alpha(explored)
-  // Frontier after: Beta(22), Lambda(21), Delta(14), Theta(11)
-  // Which is explored? {Alpha, Gamma}
   {t:"Greedy has expanded Alpha then Gamma. Gamma's neighbors are: Delta, Theta, and Alpha. What is the Explored Set and the Frontier at this point?",
    g:CITY_SVG,
-   opts:[
-     "Explored: {Alpha, Beta, Gamma} — Frontier: {Delta(14), Theta(11), Lambda(21)}",
-     "Explored: {Alpha, Gamma} — Frontier: {Beta(22), Lambda(21), Delta(14), Theta(11)}",
-     "Explored: {Alpha, Gamma} — Frontier: {Beta(22), Lambda(21), Delta(14), Theta(11), Alpha(28)}",
-     "Explored: {Alpha, Gamma, Delta} — Frontier: {Beta(22), Lambda(21), Theta(11)}"
-   ],
+   opts:["Explored: {Alpha, Beta, Gamma} — Frontier: {Delta(14), Theta(11), Lambda(21)}","Explored: {Alpha, Gamma} — Frontier: {Beta(22), Lambda(21), Delta(14), Theta(11)}","Explored: {Alpha, Gamma} — Frontier: {Beta(22), Lambda(21), Delta(14), Theta(11), Alpha(28)}","Explored: {Alpha, Gamma, Delta} — Frontier: {Beta(22), Lambda(21), Theta(11)}"],
    ans:1,
-   fb:"✓ Explored Set = every node that has been expanded = {Alpha, Gamma}. After expanding Gamma, its neighbors enter the frontier (Alpha is skipped — already explored). Beta and Lambda were added when Alpha was expanded and are still waiting. Frontier = {Beta(22), Lambda(21), Delta(14), Theta(11)}. Delta has NOT been expanded yet — it's only in the frontier."},
+   fb:"✓ Explored = every node already expanded = {Alpha, Gamma}. Alpha is skipped (already explored). Beta and Lambda were added when Alpha was expanded and are still waiting. Frontier = {Beta(22), Lambda(21), Delta(14), Theta(11)}."},
 
-  // Q3 — TRACE: Full expansion order — which node is 4th expanded?
-  // Order: Alpha→Gamma→Theta→... Theta's neighbors: Zeta(h=0), Gamma(explored)
-  // Wait — Greedy picks min h from full frontier each time
-  // After Alpha: {Beta(22), Gamma(19), Lambda(21)} → pick Gamma
-  // After Gamma: {Beta(22), Lambda(21), Delta(14), Theta(11)} → pick Theta(11)
-  // After Theta: {Beta(22), Lambda(21), Delta(14), Zeta(0)} → pick Zeta(0) = GOAL
-  // So: Alpha→Gamma→Theta→Zeta. 4th = Zeta (goal reached)
   {t:"Greedy expands nodes in order of smallest h. Using the graph, what is the COMPLETE expansion sequence from Alpha to the goal Zeta?",
    g:CITY_SVG,
-   opts:[
-     "Alpha → Beta → Eta → Kappa → Zeta",
-     "Alpha → Gamma → Delta → Kappa → Zeta",
-     "Alpha → Gamma → Theta → Zeta",
-     "Alpha → Beta → Eta → Zeta"
-   ],
+   opts:["Alpha → Beta → Eta → Kappa → Zeta","Alpha → Gamma → Delta → Kappa → Zeta","Alpha → Gamma → Theta → Zeta","Alpha → Beta → Eta → Zeta"],
    ans:2,
-   fb:"✓ Step-by-step: ①Alpha expanded → frontier {Beta(22), Gamma(19), Lambda(21)}. ②Gamma(19) is min → expanded → frontier {Beta(22), Lambda(21), Delta(14), Theta(11)}. ③Theta(11) is min → expanded → frontier {Beta(22), Lambda(21), Delta(14), Zeta(0)}. ④Zeta(0) is min → GOAL! Path: Alpha→Gamma→Theta→Zeta, cost=6+7+5=18. Note: this happens to also be the optimal path — Greedy got lucky here."},
+   fb:"✓ ①Alpha → frontier {Beta(22), Gamma(19), Lambda(21)}. ②Gamma(19) → frontier {Beta(22), Lambda(21), Delta(14), Theta(11)}. ③Theta(11) → frontier {Beta(22), Lambda(21), Delta(14), Zeta(0)}. ④Zeta(0) = GOAL. Path cost = 6+7+5 = 18."},
 
-  // Q4 — TRAP: Greedy vs Optimal — when does Greedy fail on THIS graph?
-  // If we block the Theta→Zeta edge (or if Theta had h=25 instead of 11),
-  // Greedy would go Beta→Eta→Kappa→Zeta (cost=19) instead.
-  // Question: WHY does h(Theta)=11 matter so much?
   {t:"In this graph, Greedy finds the optimal path purely by luck. Suppose h(Theta) was changed from 11 to 25. Keeping all other h values the same — what would Greedy's new path and cost be?",
    g:CITY_SVG,
-   opts:[
-     "Still Alpha→Gamma→Theta→Zeta — Greedy always finds optimal",
-     "Alpha→Gamma→Delta→Kappa→Zeta — Delta(h=14) beats Theta(h=25)",
-     "Alpha→Beta→Eta→Kappa→Zeta — Beta(h=22) chosen over Gamma(h=19)",
-     "Alpha→Beta→Eta→Zeta "
-   ],
+   opts:["Still Alpha→Gamma→Theta→Zeta — Greedy always finds optimal","Alpha→Gamma→Delta→Kappa→Zeta — Delta(h=14) beats Theta(h=25)","Alpha→Beta→Eta→Kappa→Zeta — Beta(h=22) chosen over Gamma(h=19)","Alpha→Beta→Eta→Zeta"],
    ans:1,
-   fb:"✓ If h(Theta)=25, the frontier after expanding Gamma becomes: {Beta(22), Lambda(21), Delta(14), Theta(25)}. Now Delta(14) < Beta(22) < Theta(25) → Greedy picks Delta next. Delta's neighbors: Kappa(h=8) and Gamma(explored). After expanding Delta: {Beta(22), Lambda(21), Theta(25), Kappa(8)} → Kappa(8) picked → expands to Zeta(0). Path: Alpha→Gamma→Delta→Kappa→Zeta, cost=19. This shows Greedy's path depends ENTIRELY on h values, not actual edge costs."},
+   fb:"✓ With h(Theta)=25, frontier after Gamma = {Beta(22), Lambda(21), Delta(14), Theta(25)}. Delta(14) is min → expanded → adds Kappa(8) → Kappa → Zeta. Path: Alpha→Gamma→Delta→Kappa→Zeta. This proves Greedy's path depends entirely on h values, not edge costs."},
 
-  // Q5 — TRAP: Node that's in Frontier vs Explored — what's the difference?
-  // After Alpha→Gamma→Theta expanded: Explored={Alpha,Gamma,Theta}, Frontier={Beta(22),Lambda(21),Delta(14),Zeta(0)}
-  // Zeta is in Frontier. Student must identify: Zeta not yet 'found' until it's POPPED and goal-tested
   {t:"After expanding Alpha→Gamma→Theta, the frontier contains Zeta. A student says 'Zeta is in the frontier so the search is complete.' Is this correct?",
    g:CITY_SVG,
-   opts:[
-     "Yes — as soon as Zeta appears in the frontier, the search terminates",
-     "No — in Best-First Graph Search, the goal test is applied when a node is POPPED from the frontier, not when it is added",
-     "Yes — h(Zeta)=0 means it's the goal by definition, so adding it ends the search",
-     "No — Zeta must be expanded first, then all its neighbors checked before declaring success"
-   ],
+   opts:["Yes — as soon as Zeta appears in the frontier, the search terminates","No — the goal test is applied when a node is POPPED from the frontier, not when it is added","Yes — h(Zeta)=0 means it's the goal by definition, so adding it ends the search","No — Zeta must be expanded first, then all its neighbors checked before declaring success"],
    ans:1,
-   fb:"✓ The algorithm pops Zeta from the frontier, then applies the Goal-Test — only then does it return the solution. The slides show: 'node ← POP(frontier) → If Goal-Test succeeds then return Solution(node)'. So when Zeta is popped (as the min-h node), the goal test fires and search ends. Zeta has no neighbors to expand. Being in the frontier ≠ goal found."},
+   fb:"✓ The algorithm: POP(frontier) → then apply Goal-Test. Zeta is only declared the solution when it is popped (as the min-h node). Being in the frontier ≠ goal found."},
 
-  // Q6 — THEORY: Time/Space complexity
   {t:"Greedy Best-First Search has time and space complexity of O(bᵐ). A student proposes using a 'perfect heuristic' h(n)=h*(n) for every node. How does this affect complexity?",
    g:null,
-   opts:[
-     "No change — complexity is always O(bᵐ) regardless of heuristic quality",
-     "Time becomes O(m), Space becomes O(m) — a perfect heuristic guides search straight down the optimal path with no branching",
-     "Time becomes O(1), Space becomes O(1) — the algorithm finds the goal instantly",
-     "Time improves to O(b log m), Space stays O(bᵐ)"
-   ],
+   opts:["No change — complexity is always O(bᵐ) regardless of heuristic quality","Time becomes O(m), Space becomes O(m) — a perfect heuristic guides search straight down the optimal path with no branching","Time becomes O(1), Space becomes O(1) — the algorithm finds the goal instantly","Time improves to O(b log m), Space stays O(bᵐ)"],
    ans:1,
-   fb:"✓ The slides state: 'Complexity can be reduced substantially with a good heuristic.' A perfect heuristic h(n)=h*(n) makes Greedy always pick the correct next node — no wrong branches explored, no backtracking. The search follows a single path of length m → Time O(m), Space O(m). In practice h is never perfect, but this shows why heuristic quality directly drives Greedy's efficiency."},
+   fb:"✓ A perfect h(n)=h*(n) means Greedy always picks the correct next node with no wrong branches — it follows a single path of length m. Time and space both become O(m). In practice h is never perfect, but this shows why heuristic quality drives efficiency."},
 
-  // Q7 — THEORY: Completeness trap — Tree vs Graph
   {t:"Greedy Tree Search and Greedy Graph Search are run on the same finite graph. One is complete, one is not. What is the SINGLE difference that causes this?",
    g:null,
-   opts:[
-     "Graph Search uses a better heuristic h(n) than Tree Search",
-     "Graph Search maintains an Explored Set that prevents re-expanding visited nodes, breaking potential infinite loops",
-     "Tree Search expands nodes in a different order — BFS instead of best-first",
-     "Graph Search is complete only because it uses f(n)=g(n)+h(n) instead of just h(n)"
-   ],
+   opts:["Graph Search uses a better heuristic h(n) than Tree Search","Graph Search maintains an Explored Set that prevents re-expanding visited nodes, breaking potential infinite loops","Tree Search expands nodes in a different order — BFS instead of best-first","Graph Search is complete only because it uses f(n)=g(n)+h(n) instead of just h(n)"],
    ans:1,
-   fb:"✓ The ONLY structural difference: Graph Search tracks an Explored Set. When Greedy Tree Search hits a cycle (e.g., A→B→A→B→...), it loops forever. Graph Search adds expanded nodes to Explored and skips them if seen again → no cycles possible → complete in finite spaces. The heuristic, evaluation function, and expansion order are identical in both versions."},
+   fb:"✓ The only structural difference: Graph Search keeps an Explored Set. Tree Search can loop (A→B→A→B...) forever. Graph Search skips nodes already in Explored → no cycles → complete in finite spaces."},
 
-  // Q8 — THEORY: Optimality — when can Greedy be optimal?
   {t:"Under what conditions (if any) can Greedy Best-First Search happen to find the optimal path?",
    g:null,
-   opts:[
-     "Never — Greedy is provably suboptimal in all cases",
-     "Always — if h(n) is admissible, Greedy is optimal like A*",
-     "By coincidence — when the node with the smallest h at each step also happens to be on the cheapest overall path, Greedy finds optimal. But this is not guaranteed.",
-     "Only when all edge costs are equal (uniform cost graph)"
-   ],
+   opts:["Never — Greedy is provably suboptimal in all cases","Always — if h(n) is admissible, Greedy is optimal like A*","By coincidence — when the node with smallest h at each step is also on the cheapest overall path. Not guaranteed.","Only when all edge costs are equal (uniform cost graph)"],
    ans:2,
-   fb:"✓ Greedy is NOT guaranteed to be optimal — but it CAN find the optimal path by coincidence, as seen in Q3 of this quiz where Alpha→Gamma→Theta→Zeta (cost=18) was both the greedy path and the optimal path. This happens when the heuristic's ranking of nodes aligns with the true optimal order. Admissibility guarantees A*'s optimality, not Greedy's — Greedy ignores g(n) entirely regardless of h's admissibility."},
+   fb:"✓ Greedy CAN find the optimal path by coincidence (as in Q3 of this quiz). But admissibility guarantees A*'s optimality, not Greedy's — Greedy ignores g(n) entirely regardless of h."},
 
-  // Q9 — THEORY: f(n) formula — Greedy vs A* vs UCS comparison
-  {t:"Given a node n with g(n)=12 and h(n)=7, calculate f(n) for Greedy, UCS, and A*. Then identify which algorithm would expand this node FIRST (i.e., has the smallest f-value).",
+  {t:"Given a node n with g(n)=12 and h(n)=7, calculate f(n) for Greedy, UCS, and A*. Then identify which algorithm would expand this node FIRST.",
    g:null,
-   opts:[
-     "Greedy f=7, UCS f=12, A* f=19 — Greedy expands it first",
-     "UCS f=12, Greedy f=7, A* f=19 — UCS expands it first",
-     "A* f=19, Greedy f=7, UCS f=12 — A* expands it first",
-     "All three have f=19 — they always agree"
-   ],
+   opts:["Greedy f=7, UCS f=12, A* f=19 — Greedy expands it first","UCS f=12, Greedy f=7, A* f=19 — UCS expands it first","A* f=19, Greedy f=7, UCS f=12 — A* expands it first","All three have f=19 — they always agree"],
    ans:0,
-   fb:"✓ Greedy: f=h(n)=7. UCS: f=g(n)=12. A*: f=g(n)+h(n)=12+7=19. Ranked smallest to largest: Greedy(7) < UCS(12) < A*(19). Greedy expands this node FIRST because it only sees the heuristic estimate (looks closest to goal). A* expands it LAST because it accounts for the full expected cost. This is why Greedy is faster but less reliable, and A* is slower but optimal."},
+   fb:"✓ Greedy: f=h=7. UCS: f=g=12. A*: f=g+h=19. Ranked: Greedy(7) < UCS(12) < A*(19). Greedy expands first because it ignores the expensive path cost."},
 
-  // Q10 — THEORY: Best-First Search definition
   {t:"Greedy Best-First Search is a specific type of Best-First Search. What defines Best-First Search in general, and what makes Greedy a specific case of it?",
    g:null,
-   opts:[
-     "Best-First always uses BFS order; Greedy modifies it by skipping explored nodes",
-     "Best-First selects nodes based on an evaluation function f(n); Greedy is the specific case where f(n) = h(n) only",
-     "Best-First is optimal by definition; Greedy sacrifices optimality for speed by using f(n)=h(n)+g(n)",
-     "Best-First and Greedy are the same algorithm — 'Best-First' is just the formal name"
-   ],
+   opts:["Best-First always uses BFS order; Greedy modifies it by skipping explored nodes","Best-First selects nodes based on an evaluation function f(n); Greedy is the specific case where f(n) = h(n) only","Best-First is optimal by definition; Greedy sacrifices optimality for speed by using f(n)=h(n)+g(n)","Best-First and Greedy are the same algorithm — 'Best-First' is just the formal name"],
    ans:1,
-   fb:"✓ From the slides: Best-First Search 'selects nodes based on an evaluation function f(n)' and 'always expands the node with the lowest evaluation.' Greedy is the specific variant where f(n)=h(n) — only the heuristic, no path cost. A* is another variant where f(n)=g(n)+h(n). Different choices of f(n) produce different algorithm behaviors — this is why both Greedy and A* are called 'Best-First' algorithms."}
+   fb:"✓ Best-First Search: expand the node with the lowest f(n). Greedy sets f(n)=h(n). A* sets f(n)=g(n)+h(n). Different choices of f(n) → different algorithms, both called 'Best-First'."}
 ];
-
-/*
- ══════════════════════════════════════════════════════
-  A* CUSTOM GRAPH — "Station Network" (fictional)
-  Start = S (g=0, h=10), Goal = G (h=0)
-
-  Nodes & heuristics h(n) = straight-line estimate to G:
-    S   h=10  (start)
-    P   h=8
-    Q   h=7
-    R   h=9
-    T   h=5
-    U   h=6
-    V   h=3
-    W   h=4
-    G   h=0   (GOAL)
-
-  Edges (undirected, costs):
-    S → P   cost=2
-    S → Q   cost=5
-    S → R   cost=1
-    P → T   cost=4
-    P → U   cost=7
-    Q → U   cost=2
-    Q → V   cost=8
-    R → Q   cost=3
-    R → W   cost=6
-    T → G   cost=9     ← trap: h(T)=5 looks great but g gets huge
-    U → V   cost=1
-    U → W   cost=5
-    V → G   cost=2
-    W → G   cost=3
-
-  A* f-values at each expansion (g+h):
-    Start S: f = 0+10 = 10
-    Expand S → frontier:
-      P: g=2, h=8, f=10
-      Q: g=5, h=7, f=12
-      R: g=1, h=9, f=10   ← tie with P, expand by order → P first (f=10)
-
-    Expand P (f=10) → add T,U:
-      T: g=6, h=5, f=11
-      U: g=9, h=6, f=15
-      Frontier: R(f=10), Q(f=12), T(f=11), U(f=15)
-
-    Expand R (f=10) → add Q(already in frontier, check update), W:
-      Q via R: g=1+3=4, f=4+7=11  → update Q (was f=12, now f=11)
-      W: g=7, h=4, f=11
-      Frontier: T(f=11), Q(f=11), W(f=11), U(f=15)
-
-    Expand T (f=11) → add G(g=15,f=15)
-      Frontier: Q(f=11), W(f=11), G(f=15), U(f=15)
-
-    Expand Q (f=11) → add U(check: via Q g=4+2=6 < current g=9 → update U f=6+6=12), V(g=4+8=12,f=12+3=15)
-      Frontier: W(f=11), U(f=12), V(f=15), G(f=15)
-
-    Expand W (f=11) → add G via W: g=7+3=10, f=10  → UPDATE G! (was f=15, now f=10)
-      Frontier: G(f=10), U(f=12), V(f=15), G-old removed
-
-    Expand G (f=10) → GOAL! Path: S→R→W→G, cost=1+6+3=10 ✓ OPTIMAL
-    (vs T path: S→P→T→G cost=2+4+9=15, vs V path: ...cost≥12)
- ══════════════════════════════════════════════════════
-*/
-
-// MAIN A* GRAPH — used across Q1–Q5
-const ASTAR_CITY = `<svg width="520" height="240" viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg" font-family="DM Mono,monospace">
-  <defs>
-    <marker id="aarr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-      <polygon points="0 0,6 3,0 6" fill="#b8d4c4"/>
-    </marker>
-  </defs>
-
-  <!-- edges -->
-  <!-- S-P -->
-  <line x1="58" y1="110" x2="148" y2="65" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="98" y="78" fill="#9ab8a4" font-size="8" text-anchor="middle">2</text>
-  <!-- S-Q -->
-  <line x1="58" y1="118" x2="148" y2="140" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="97" y="138" fill="#9ab8a4" font-size="8" text-anchor="middle">5</text>
-  <!-- S-R -->
-  <line x1="55" y1="122" x2="148" y2="195" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="93" y="172" fill="#9ab8a4" font-size="8" text-anchor="middle">1</text>
-  <!-- P-T -->
-  <line x1="170" y1="60" x2="255" y2="42" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="212" y="41" fill="#9ab8a4" font-size="8" text-anchor="middle">4</text>
-  <!-- P-U -->
-  <line x1="172" y1="68" x2="255" y2="118" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="218" y="86" fill="#9ab8a4" font-size="8" text-anchor="middle">7</text>
-  <!-- Q-U -->
-  <line x1="172" y1="138" x2="255" y2="122" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="216" y="124" fill="#9ab8a4" font-size="8" text-anchor="middle">2</text>
-  <!-- Q-V -->
-  <line x1="172" y1="145" x2="255" y2="178" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="208" y="172" fill="#9ab8a4" font-size="8" text-anchor="middle">8</text>
-  <!-- R-Q -->
-  <line x1="172" y1="192" x2="172" y2="152" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="162" y="175" fill="#9ab8a4" font-size="8" text-anchor="middle">3</text>
-  <!-- R-W -->
-  <line x1="172" y1="198" x2="255" y2="215" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="212" y="214" fill="#9ab8a4" font-size="8" text-anchor="middle">6</text>
-  <!-- T-G (dashed — trap) -->
-  <line x1="276" y1="40" x2="430" y2="110" stroke="#d9a0a0" stroke-width="1.4" stroke-dasharray="5,3"/>
-  <text x="362" y="62" fill="#d9a0a0" font-size="8" text-anchor="middle">9 ⚠</text>
-  <!-- U-V -->
-  <line x1="272" y1="120" x2="272" y2="172" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="262" y="150" fill="#9ab8a4" font-size="8" text-anchor="middle">1</text>
-  <!-- U-W -->
-  <line x1="278" y1="128" x2="278" y2="208" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="292" y="172" fill="#9ab8a4" font-size="8" text-anchor="middle">5</text>
-  <!-- V-G -->
-  <line x1="292" y1="178" x2="428" y2="122" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="366" y="142" fill="#9ab8a4" font-size="8" text-anchor="middle">2</text>
-  <!-- W-G -->
-  <line x1="292" y1="215" x2="428" y2="128" stroke="#b8d4c4" stroke-width="1.4"/>
-  <text x="368" y="185" fill="#9ab8a4" font-size="8" text-anchor="middle">3</text>
-
-  <!-- NODES -->
-  <!-- S start -->
-  <circle cx="38" cy="115" r="19" fill="#e8f2ec" stroke="#2a7a50" stroke-width="2"/>
-  <text x="38" y="111" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="700">S</text>
-  <text x="38" y="123" fill="#2a7a50" text-anchor="middle" font-size="8">h=10</text>
-  <!-- P -->
-  <circle cx="160" cy="62" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="160" y="58" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">P</text>
-  <text x="160" y="70" fill="#5a7a65" text-anchor="middle" font-size="8">h=8</text>
-  <!-- Q -->
-  <circle cx="160" cy="142" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="160" y="138" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">Q</text>
-  <text x="160" y="150" fill="#5a7a65" text-anchor="middle" font-size="8">h=7</text>
-  <!-- R -->
-  <circle cx="160" cy="198" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="160" y="194" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">R</text>
-  <text x="160" y="206" fill="#5a7a65" text-anchor="middle" font-size="8">h=9</text>
-  <!-- T (trap) -->
-  <circle cx="266" cy="38" r="19" fill="#fdf8f0" stroke="#d9a0a0" stroke-width="1.5"/>
-  <text x="266" y="34" fill="#7a4020" text-anchor="middle" font-size="10" font-weight="600">T</text>
-  <text x="266" y="46" fill="#c08050" text-anchor="middle" font-size="8">h=5 ⚠</text>
-  <!-- U -->
-  <circle cx="266" cy="120" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="266" y="116" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">U</text>
-  <text x="266" y="128" fill="#5a7a65" text-anchor="middle" font-size="8">h=6</text>
-  <!-- V -->
-  <circle cx="266" cy="180" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="266" y="176" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">V</text>
-  <text x="266" y="188" fill="#5a7a65" text-anchor="middle" font-size="8">h=3</text>
-  <!-- W -->
-  <circle cx="266" cy="218" r="19" fill="#fff" stroke="#b8d4c4" stroke-width="1.5"/>
-  <text x="266" y="214" fill="#1a2e24" text-anchor="middle" font-size="10" font-weight="600">W</text>
-  <text x="266" y="226" fill="#5a7a65" text-anchor="middle" font-size="8">h=4</text>
-  <!-- G GOAL -->
-  <circle cx="448" cy="120" r="21" fill="#e8f5ee" stroke="#2a7a50" stroke-width="2.5"/>
-  <text x="448" y="116" fill="#1a2e24" text-anchor="middle" font-size="11" font-weight="700">G</text>
-  <text x="448" y="128" fill="#2a7a50" text-anchor="middle" font-size="8">GOAL h=0</text>
-
-  <text x="260" y="14" fill="#9ab8a4" text-anchor="middle" font-size="7">Edge numbers = travel cost · h = heuristic estimate to G · ⚠ dashed = high-cost trap</text>
-</svg>`;
 
 /* ── A* QUESTIONS ── */
 const AQ=[
-
-  // Q1 — TRACE: f(n) calculation for S's three neighbors
-  // S expanded first (g=0). Neighbors: P(cost=2,h=8), Q(cost=5,h=7), R(cost=1,h=9)
-  // f(P)=10, f(Q)=12, f(R)=10. Tie between P and R — P expanded first (alphabetical/order)
-  // Trap: Q has lowest h=7 but f=12 is highest → Greedy would pick Q, A* picks P or R
   {t:"A* starts at S. After expanding S, compute f(n) for each neighbor. Which node does A* expand next — and why does the node with the lowest h NOT get picked?",
    g:ASTAR_CITY,
-   opts:[
-     "Q (h=7) — A* always picks the smallest h, same as Greedy",
-     "P (f=10) or R (f=10) — tied for smallest f. Q has low h=7 but f=12 because g(Q)=5 is expensive",
-     "R (f=10) — smallest edge cost from S so g is minimized",
-     "P (f=10) — because P is the closest node to S by edge cost (cost=2)"
-   ],
+   opts:["Q (h=7) — A* always picks the smallest h, same as Greedy","P (f=10) or R (f=10) — tied for smallest f. Q has low h=7 but f=12 because g(Q)=5 is expensive","R (f=10) — smallest edge cost from S so g is minimized","P (f=10) — because P is the closest node to S by edge cost (cost=2)"],
    ans:1,
-   fb:"✓ f(P)=g+h=2+8=10. f(Q)=5+7=12. f(R)=1+9=10. A* picks min f — P and R tie at f=10. Q has h=7 (lowest h!) but its g=5 makes f=12, so A* deprioritizes it. This is the critical difference from Greedy: A* penalizes expensive paths even when h looks attractive."},
+   fb:"✓ f(P)=2+8=10. f(Q)=5+7=12. f(R)=1+9=10. A* picks min f — P and R tie at 10. Q has h=7 (lowest!) but g=5 makes f=12. A* penalizes expensive paths even when h looks attractive."},
 
-  // Q2 — TRACE: After expanding S and P, what is the full frontier with f-values?
-  // S expanded → {P(f=10), Q(f=12), R(f=10)}
-  // P expanded → adds T(g=6,h=5,f=11), U(g=9,h=6,f=15). P removed from frontier.
-  // Frontier: {R(f=10), Q(f=12), T(f=11), U(f=15)}
   {t:"A* expands S first, then P. P's neighbors are T (edge=4, h=5) and U (edge=7, h=6). What is the complete frontier with correct f-values after both expansions?",
    g:ASTAR_CITY,
-   opts:[
-     "Frontier: {T(f=5), U(f=6), Q(f=7), R(f=9)} — using h values only",
-     "Frontier: {R(f=10), T(f=11), Q(f=12), U(f=15)} — g(T)=2+4=6, g(U)=2+7=9",
-     "Frontier: {R(f=10), Q(f=12), T(f=11), U(f=9)} — g(U)=7 from P only",
-     "Frontier: {P(f=10), R(f=10), Q(f=12), T(f=11), U(f=15)} — P stays in frontier"
-   ],
+   opts:["Frontier: {T(f=5), U(f=6), Q(f=7), R(f=9)} — using h values only","Frontier: {R(f=10), T(f=11), Q(f=12), U(f=15)} — g(T)=2+4=6, g(U)=2+7=9","Frontier: {R(f=10), Q(f=12), T(f=11), U(f=9)} — g(U)=7 from P only","Frontier: {P(f=10), R(f=10), Q(f=12), T(f=11), U(f=15)} — P stays in frontier"],
    ans:1,
-   fb:"✓ After expanding S: frontier={P(10),Q(12),R(10)}. Expand P (f=10, g=2): T gets g=2+4=6, f=6+5=11. U gets g=2+7=9, f=9+6=15. P is moved to Explored. Frontier becomes {R(10), T(11), Q(12), U(15)}. Key: g accumulates along the path — T's g=6 comes from S→P→T=2+4."},
+   fb:"✓ Expand P (g=2): T gets g=6, f=11. U gets g=9, f=15. P moves to Explored. Frontier = {R(10), T(11), Q(12), U(15)}. Key: g accumulates — T's g=6 comes from S→P→T = 2+4."},
 
-  // Q3 — TRACE: R is expanded and updates Q's f-value in the frontier
-  // R expanded (f=10, g=1): neighbors Q and W
-  // Q via R: g=1+3=4, f=4+7=11 → better than current Q(f=12,g=5) → UPDATE
-  // W: g=1+6=7, h=4, f=11
-  // Frontier after: {T(11), Q(11 updated), W(11), U(15)}
   {t:"Next, A* expands R (g=1, f=10). R connects to Q (edge=3) and W (edge=6). Q is already in the frontier with f=12 via path S→Q. What happens to Q, and what does the frontier look like after?",
    g:ASTAR_CITY,
-   opts:[
-     "Q is ignored — it's already in the frontier, A* never revisits frontier nodes",
-     "Q is updated: new path S→R→Q has g=1+3=4, f=4+7=11, which is cheaper than f=12 → replace. W added with f=7+4=11. Frontier: {T(11), Q(11), W(11), U(15)}",
-     "Q is duplicated in the frontier — both f=12 and f=11 entries kept",
-     "Q is moved to Explored since R reached it — W added with f=11. Frontier: {T(11), W(11), U(15)}"
-   ],
+   opts:["Q is ignored — it's already in the frontier, A* never revisits frontier nodes","Q is updated: new path S→R→Q has g=1+3=4, f=11, cheaper than f=12 → replace. W added with f=11. Frontier: {T(11), Q(11), W(11), U(15)}","Q is duplicated in the frontier — both f=12 and f=11 entries kept","Q is moved to Explored since R reached it — W added with f=11. Frontier: {T(11), W(11), U(15)}"],
    ans:1,
-   fb:"✓ This is A*'s frontier update rule (from the slides): 'if child state is in frontier with higher f-value → replace that frontier node with child.' Q's old entry (f=12, via S→Q cost=5) is replaced by the cheaper path (f=11, via S→R→Q cost=1+3=4). W is new → added with g=7, f=11. Frontier: {T(11), Q(11), W(11), U(15)}. Three-way tie at f=11!"},
+   fb:"✓ A*'s update rule: if a frontier node gets a cheaper path, replace it. Q's old f=12 (via S→Q cost=5) is replaced by f=11 (via S→R→Q cost=4). W added with g=7, f=11. Frontier = {T(11), Q(11), W(11), U(15)}."},
 
-  // Q4 — TRACE: T expanded → adds G(f=15). But later W expands → G updated to f=10
-  // After tie at f=11: expand T → G via T: g=6+9=15, f=15+0=15
-  // Then expand Q(f=11) → updates U: g=4+2=6, f=12. Adds V: g=4+8=12, f=15
-  // Then expand W(f=11) → G via W: g=7+3=10, f=10 → UPDATE G from f=15 to f=10!
   {t:"T, Q, and W all have f=11. A* expands T first, then Q, then W. T adds G to the frontier with g=15, f=15. W is expanded last and discovers G via path S→R→W→G with g=1+6+3=10. What does A* do?",
    g:ASTAR_CITY,
-   opts:[
-     "A* ignores the W→G path — G is already in the frontier so it cannot be updated",
-     "A* updates G in the frontier: replaces f=15 with the cheaper f=10+0=10, recording path S→R→W→G",
-     "A* adds a second copy of G (f=10) alongside G (f=15) in the frontier",
-     "A* immediately terminates when T adds G to the frontier, returning path S→P→T→G cost=15"
-   ],
+   opts:["A* ignores the W→G path — G is already in the frontier so it cannot be updated","A* updates G in the frontier: replaces f=15 with f=10, recording path S→R→W→G","A* adds a second copy of G (f=10) alongside G (f=15) in the frontier","A* immediately terminates when T adds G to the frontier, returning path S→P→T→G cost=15"],
    ans:1,
-   fb:"✓ A* applies the update rule whenever a frontier node gets a cheaper path. G was added by T with f=15 (g=15, via S→P→T→G cost=2+4+9=15). W finds G with g=10 (S→R→W→G cost=1+6+3=10), so f=10+0=10 < 15 → G is updated. Critical point: A* does NOT terminate when the goal is added to the frontier — only when the goal is POPPED and goal-tested."},
+   fb:"✓ A* applies the update rule whenever a cheaper path is found to a frontier node. G was f=15 via T; W finds G at g=10, f=10 → G is updated. A* does NOT terminate when the goal is added to the frontier — only when it is POPPED."},
 
-  // Q5 — TRACE: Final answer — what is the optimal path and cost?
-  // After W updates G to f=10, frontier = {G(10), U(12), V(15), G-old gone}
-  // G popped → goal test passes → path: S→R→W→G, cost=1+6+3=10
   {t:"After all expansions, G is in the frontier with f=10 (via S→R→W→G). The frontier also contains U(f=12) and V(f=15). A* pops G — what is the final optimal path and total cost, and why did A* NOT take the path through T?",
    g:ASTAR_CITY,
-   opts:[
-     "Path: S→P→T→G, cost=15 — T has h=5 so A* prefers it",
-     "Path: S→R→W→G, cost=10 — A* found this cheapest path; T's path (cost=15) had a higher g even though h(T)=5 looked attractive",
-     "Path: S→Q→U→V→G, cost=5+2+1+2=10 — tied with W path",
-     "Path: S→R→Q→V→G, cost=1+3+8+2=14 — A* avoids W due to high edge cost"
-   ],
+   opts:["Path: S→P→T→G, cost=15 — T has h=5 so A* prefers it","Path: S→R→W→G, cost=10 — cheapest path; T's path cost=15 was too expensive despite h(T)=5","Path: S→Q→U→V→G, cost=5+2+1+2=10 — tied with W path","Path: S→R→Q→V→G, cost=1+3+8+2=14"],
    ans:1,
-   fb:"✓ Optimal path: S→R→W→G with total cost = 1+6+3 = 10. T was a trap: h(T)=5 looked great (Greedy would love it!) but reaching T costs g=6 (via S→P→T), and then T→G costs 9 more → total g=15. A* never committed to T's direction because f(T)=11 was tied with W(f=11) and Q(f=11). When W was expanded, it found G at g=10, updating G's f to 10 — beating T's path completely. This is exactly why f=g+h beats f=h alone."},
+   fb:"✓ Optimal: S→R→W→G, cost = 1+6+3 = 10. T was a trap: h(T)=5 looked great but g(T)=6 + edge T→G=9 gives total g=15. A* accounts for both g and h, so it found the cheaper W path. This is exactly why f=g+h beats f=h alone."},
 
-  // Q6 — THEORY: Admissibility — definition + consequence
   {t:"h(T) = 5, but the true cheapest path from T to G costs 9 (the only edge T→G). Is h(T) admissible? What would happen to A*'s optimality if h(T) were set to 12 instead?",
    g:null,
-   opts:[
-     "h(T)=5 is admissible (5 ≤ 9). If h(T)=12: h(T) > h*(T)=9 → NOT admissible → A* may return a suboptimal path",
-     "h(T)=5 is NOT admissible because it underestimates — A* needs exact values",
-     "h(T)=5 is admissible. h(T)=12 is also fine — A* corrects overestimates automatically",
-     "Admissibility only matters for Tree Search — Graph Search is always optimal regardless of h"
-   ],
+   opts:["h(T)=5 is admissible (5 ≤ 9). If h(T)=12: h > h*(T)=9 → NOT admissible → A* may return a suboptimal path","h(T)=5 is NOT admissible because it underestimates — A* needs exact values","h(T)=5 is admissible. h(T)=12 is also fine — A* corrects overestimates automatically","Admissibility only matters for Tree Search — Graph Search is always optimal regardless of h"],
    ans:0,
-   fb:"✓ Admissibility: h(n) ≤ h*(n) where h*(n) = true optimal cost to goal. h(T)=5 ≤ h*(T)=9 ✓ admissible. If h(T)=12: 12 > 9 → overestimates → NOT admissible. A* might then expand other nodes before T (since f(T)=6+12=18 would be large), but worse — it could return a path through T with an inflated f, breaking the optimality proof. Admissibility guarantees A* never 'gives up' on a path that might be optimal."},
+   fb:"✓ Admissibility: h(n) ≤ h*(n). h(T)=5 ≤ 9 ✓ admissible. If h(T)=12 > 9 → overestimates → NOT admissible → A* may expand nodes in the wrong order and return a non-optimal solution."},
 
-  // Q7 — THEORY: Consistency (triangle inequality)
   {t:"Check consistency for node R and its neighbor Q: h(R)=9, edge cost c(R,Q)=3, h(Q)=7. Does the consistency condition hold? What does consistency guarantee that admissibility alone does not?",
    g:null,
-   opts:[
-     "h(R)=9 ≤ c(R,Q)+h(Q)=3+7=10 ✓ consistent. Consistency guarantees A* Graph Search is optimal without re-expanding nodes — admissibility alone only guarantees Tree Search optimality",
-     "h(R)=9 > c(R,Q)+h(Q)=10 — inconsistent. A* must use Tree Search instead",
-     "Consistency: h(R) = h(Q) + c(R,Q) exactly. 9 ≠ 7+3=10 — NOT consistent",
-     "Consistency and admissibility are the same condition — both just require h(n) ≤ h*(n)"
-   ],
+   opts:["h(R)=9 ≤ c(R,Q)+h(Q)=10 ✓ consistent. Consistency guarantees A* Graph Search optimality without re-expanding nodes","h(R)=9 > c(R,Q)+h(Q)=10 — inconsistent. A* must use Tree Search instead","Consistency: h(R) = h(Q) + c(R,Q) exactly. 9 ≠ 10 — NOT consistent","Consistency and admissibility are the same condition"],
    ans:0,
-   fb:"✓ Consistency check: h(R) ≤ c(R,Q) + h(Q) → 9 ≤ 3+7=10 ✓. The condition holds. From the slides: 'Consistent heuristics are admissible. Not all admissible heuristics are consistent.' Consistency guarantees that f(n) never decreases along any path — so once a node is expanded by A*, its optimal path has been found. This means Graph Search never needs to re-open explored nodes, making it more efficient than Tree Search with only admissibility."},
+   fb:"✓ Consistency: h(R) ≤ c(R,Q)+h(Q) → 9 ≤ 10 ✓. Consistent h guarantees f(n) never decreases along a path → once a node is expanded, its optimal path is found → no need to re-open explored nodes. Admissibility alone only guarantees Tree Search optimality."},
 
-  // Q8 — THEORY: A* optimality conditions — Tree vs Graph
   {t:"A student runs A* Graph Search with an admissible but NOT consistent heuristic. The slides state: 'The graph-search version is optimal if h(n) is consistent.' What risk does the student face?",
    g:null,
-   opts:[
-     "No risk — admissibility is sufficient for Graph Search optimality",
-     "A* Graph Search may expand a node via a suboptimal path, close it in Explored, then miss a better path to that node later — potentially returning a non-optimal solution",
-     "A* becomes incomplete — it may miss the goal entirely",
-     "A* will always find the optimal solution but may take exponentially longer"
-   ],
+   opts:["No risk — admissibility is sufficient for Graph Search optimality","A* Graph Search may expand a node via a suboptimal path, close it in Explored, then miss a better path later — potentially returning a non-optimal solution","A* becomes incomplete — it may miss the goal entirely","A* will always find the optimal solution but may take exponentially longer"],
    ans:1,
-   fb:"✓ With an admissible but inconsistent h, f-values can decrease along a path (non-monotonic). A* Graph Search might expand node X via an expensive path, add X to Explored, then later discover a cheaper path to X — but since X is in Explored, it gets ignored. Result: A* returns a suboptimal solution. Tree Search with admissible h is still optimal (re-expands are allowed), but is less efficient. This is why the slides specify: Graph Search needs consistency, Tree Search only needs admissibility."},
+   fb:"✓ With admissible but inconsistent h, f-values can decrease along a path. A* might close node X in Explored via an expensive path, then discover a cheaper path to X — but X is already in Explored and gets ignored. Result: suboptimal solution. Tree Search with admissible h is still optimal (re-expands allowed), but less efficient."},
 
-  // Q9 — THEORY: Space complexity — why A* struggles
   {t:"A* is run on a graph with branching factor b=4 and the solution is at depth d=10. Approximately how many nodes does A* keep in memory, and why is this a problem?",
    g:null,
-   opts:[
-     "O(d) = 10 nodes — A* only stores the current path like DFS",
-     "O(b^d) = 4^10 ≈ 1 million nodes — A* keeps ALL generated nodes in memory (frontier + explored), which can exhaust RAM on large problems",
-     "O(b×d) = 40 nodes — A* stores one level at a time like BFS",
-     "O(log(b^d)) = 20 nodes — the priority queue is compressed"
-   ],
+   opts:["O(d) = 10 nodes — A* only stores the current path like DFS","O(b^d) = 4^10 ≈ 1 million nodes — A* keeps ALL generated nodes in memory (frontier + explored), which can exhaust RAM","O(b×d) = 40 nodes — A* stores one level at a time like BFS","O(log(b^d)) = 20 nodes — the priority queue is compressed"],
    ans:1,
-   fb:"✓ From the slides: A* 'keeps all nodes in memory' — Space complexity = O(bᵈ). With b=4, d=10: 4¹⁰ = 1,048,576 nodes. This is A*'s main weakness compared to Greedy (which also has O(bᵐ) but reaches the goal faster with less exploration). In practice, memory exhaustion is the main bottleneck for A* on large problems — not time. Algorithms like IDA* were invented specifically to address this, trading memory for repeated computation."},
+   fb:"✓ A* keeps all nodes in memory → Space = O(bᵈ). With b=4, d=10: 4¹⁰ ≈ 1 million nodes. This is A*'s main weakness. IDA* was invented to address this by trading memory for repeated computation."},
 
-  // Q10 — THEORY: Why A* is complete + when it terminates
-  {t:"A* is guaranteed to be complete (always finds a solution if one exists). It is also guaranteed to be optimal. At exactly what point does A* terminate and declare the solution found?",
+  {t:"A* is guaranteed to be complete and optimal. At exactly what point does A* terminate and declare the solution found?",
    g:null,
-   opts:[
-     "When the goal node is first generated (added to the frontier)",
-     "When the goal node is POPPED from the frontier and the goal test is applied — not when it is first added",
-     "When f(goal) = 0, regardless of when it is popped",
-     "When the frontier is empty — A* checks all nodes before deciding"
-   ],
+   opts:["When the goal node is first generated (added to the frontier)","When the goal node is POPPED from the frontier and the goal test is applied — not when it is first added","When f(goal) = 0, regardless of when it is popped","When the frontier is empty — A* checks all nodes before deciding"],
    ans:1,
-   fb:"✓ This is a subtle but critical point (and common exam trap). From the slides algorithm: 'node ← POP(frontier) → If Goal-Test succeeds then return Solution(node)'. The goal test fires on POP, not on insertion. Why does this matter? Because a cheaper path to the goal might still be in the frontier when the goal is first inserted. By waiting until the goal is popped (i.e., it has the globally minimum f), A* guarantees the path it returns is optimal. Terminating on insertion would risk returning a non-optimal path."}
+   fb:"✓ Algorithm: POP(frontier) → apply Goal-Test. The goal test fires on POP, not on insertion. A cheaper path to the goal might still exist in the frontier — waiting until the goal is popped (globally minimum f) guarantees optimality."}
 ];
 
 /* ── STATE ── */
